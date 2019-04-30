@@ -125,6 +125,7 @@ updateElementsProps(contactParagraphs, [
   { textContent: siteContent.contact.phone },
   { textContent: siteContent.contact.email },
 ]);
+updateTextContent(copyrightParagraph, siteContent.footer.copyright);
 /* Styles */
 // updateElementsStyles(navLinks, {
 //   color: 'green'
