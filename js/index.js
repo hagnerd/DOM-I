@@ -103,7 +103,7 @@ updateElementsProps(navLinks, {
 });
 updateTextContent(ctaTitle, siteContent.cta.h1);
 updateTextContent(ctaButton, siteContent.cta.button);
-
+updateSrc(ctaImg, siteContent.cta['img-src']);
 /* Styles */
 // updateElementsStyles(navLinks, {
 //   color: 'green'
