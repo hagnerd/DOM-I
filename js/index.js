@@ -45,15 +45,45 @@ logo.setAttribute('src', siteContent["nav"]["img-src"])
 let selectAll = query => Array.from(document.querySelectorAll(query));
 let selectOne = query => document.querySelector(query);
 
-const updateProp = (element, prop, newValue) => {
-  element[prop] = newValue;
+const updateProps = (element, props, meta) => {
+  let attrs = Object.entries(props);
+
+  attrs.forEach((attr) => {
+    let [prop, value] = attr;
+
+    if (typeof value === 'function') {
+      value = value(meta);
+    }
+
+    element[prop] = value;
+  });
+
 }
 
+const updateElementsProps = (elements, props) => 
+Array.isArray(props) 
+    ? elements.forEach((el, i) => {
+      updateProps(el, props[i], i)
+    })
+    : elements.forEach((el, i) => {
+      updateProps(el, props, i)
+    })
+
 const updateTextContent = (element, newValue) => 
-  updateProp(element, 'textContent', newValue);
+  updateProps(element, {'textContent': newValue});
 
 const updateSrc = (element, newValue) =>
-  updateProp(element, 'src', newValue);
+  updateProps(element, {'src': newValue});
+
+const updateElementStyles = (element, styles) => {
+  let stylesArr = Object.entries(styles);
+
+  stylesArr.forEach(([key, value]) => {
+    element.style[key] = value;
+  })
+}
+
+const updateElementsStyles = (elements, styles) => elements.forEach(el => updateElementStyles(el, styles))
 
 /* Selectors */
 let navLinks = selectAll('nav a');
@@ -67,5 +97,14 @@ let contactHeader = selectOne('.contact h4');
 let contactParagraphs = selectAll('.contact p');
 let copyrightParagraph = selectOne('footer p');
 
-/*  */
+/* Content */
+updateElementsProps(navLinks, { 
+  textContent: (i) => siteContent.nav[`nav-item-${i+1}`],
+});
 updateTextContent(ctaTitle, siteContent.cta.h1);
+updateTextContent(ctaButton, siteContent.cta.button);
+
+/* Styles */
+// updateElementsStyles(navLinks, {
+//   color: 'green'
+// })
