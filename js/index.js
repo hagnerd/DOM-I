@@ -91,7 +91,7 @@ let ctaTitle = selectOne('.cta-text h1');
 let ctaButton = selectOne('.cta-text button');
 let ctaImg = selectOne('#cta-img');
 let textContentHeaders = selectAll('.text-content h4');
-let textContentParagraphs = selectAll('.text-content h4');
+let textContentParagraphs = selectAll('.text-content p');
 let middleImg = selectOne('#middle-img');
 let contactHeader = selectOne('.contact h4');
 let contactParagraphs = selectAll('.contact p');
@@ -104,6 +104,20 @@ updateElementsProps(navLinks, {
 updateTextContent(ctaTitle, siteContent.cta.h1);
 updateTextContent(ctaButton, siteContent.cta.button);
 updateSrc(ctaImg, siteContent.cta['img-src']);
+updateElementsProps(textContentHeaders, [
+  { textContent: siteContent['main-content']['features-h4'] },
+  { textContent: siteContent['main-content']['about-h4'] },
+  { textContent: siteContent['main-content']['services-h4'] },
+  { textContent: siteContent['main-content']['product-h4'] },
+  { textContent: siteContent['main-content']['vision-h4'] },
+]);
+updateElementsProps(textContentParagraphs, [
+  { textContent: siteContent['main-content']['features-content'] },
+  { textContent: siteContent['main-content']['about-content'] },
+  { textContent: siteContent['main-content']['services-content'] },
+  { textContent: siteContent['main-content']['product-content'] },
+  { textContent: siteContent['main-content']['vision-content'] },
+]);
 /* Styles */
 // updateElementsStyles(navLinks, {
 //   color: 'green'
