@@ -45,6 +45,16 @@ logo.setAttribute('src', siteContent["nav"]["img-src"])
 let selectAll = query => Array.from(document.querySelectorAll(query));
 let selectOne = query => document.querySelector(query);
 
+const updateProp = (element, prop, newValue) => {
+  element[prop] = newValue;
+}
+
+const updateTextContent = (element, newValue) => 
+  updateProp(element, 'textContent', newValue);
+
+const updateSrc = (element, newValue) =>
+  updateProp(element, 'src', newValue);
+
 /* Selectors */
 let navLinks = selectAll('nav a');
 let ctaTitle = selectOne('.cta-text h1');
@@ -56,3 +66,6 @@ let middleImg = selectOne('#middle-img');
 let contactHeader = selectOne('.contact h4');
 let contactParagraphs = selectAll('.contact p');
 let copyrightParagraph = selectOne('footer p');
+
+/*  */
+updateTextContent(ctaTitle, siteContent.cta.h1);
