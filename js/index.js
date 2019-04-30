@@ -119,6 +119,12 @@ updateElementsProps(textContentParagraphs, [
   { textContent: siteContent['main-content']['vision-content'] },
 ]);
 updateSrc(middleImg, siteContent['main-content']['middle-img-src']);
+updateTextContent(contactHeader, siteContent.contact['contact-h4']);
+updateElementsProps(contactParagraphs, [
+  { textContent: siteContent.contact.address },
+  { textContent: siteContent.contact.phone },
+  { textContent: siteContent.contact.email },
+]);
 /* Styles */
 // updateElementsStyles(navLinks, {
 //   color: 'green'
