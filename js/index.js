@@ -118,6 +118,7 @@ updateElementsProps(textContentParagraphs, [
   { textContent: siteContent['main-content']['product-content'] },
   { textContent: siteContent['main-content']['vision-content'] },
 ]);
+updateSrc(middleImg, siteContent['main-content']['middle-img-src']);
 /* Styles */
 // updateElementsStyles(navLinks, {
 //   color: 'green'
