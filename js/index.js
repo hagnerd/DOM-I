@@ -86,6 +86,7 @@ const updateElementStyles = (element, styles) => {
 const updateElementsStyles = (elements, styles) => elements.forEach(el => updateElementStyles(el, styles))
 
 /* Selectors */
+let nav = selectOne('nav');
 let navLinks = selectAll('nav a');
 let ctaTitle = selectOne('.cta-text h1');
 let ctaButton = selectOne('.cta-text button');
@@ -101,7 +102,9 @@ let copyrightParagraph = selectOne('footer p');
 updateElementsProps(navLinks, { 
   textContent: (i) => siteContent.nav[`nav-item-${i+1}`],
 });
-updateTextContent(ctaTitle, siteContent.cta.h1);
+
+updateElementStyles(ctaTitle, { 'white-space': 'pre' });
+updateTextContent(ctaTitle, siteContent.cta.h1.replace(/\s/g, '\n'));
 updateTextContent(ctaButton, siteContent.cta.button);
 updateSrc(ctaImg, siteContent.cta['img-src']);
 updateElementsProps(textContentHeaders, [
@@ -127,6 +130,7 @@ updateElementsProps(contactParagraphs, [
 ]);
 updateTextContent(copyrightParagraph, siteContent.footer.copyright);
 /* Styles */
-// updateElementsStyles(navLinks, {
-//   color: 'green'
-// })
+
+updateElementsStyles(navLinks, {
+  color: 'green'
+})
