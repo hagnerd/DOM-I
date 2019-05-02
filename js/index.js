@@ -140,8 +140,10 @@ updateElementsProps(textContentParagraphs, [
 ]);
 updateSrc(middleImg, siteContent['main-content']['middle-img-src']);
 updateTextContent(contactHeader, siteContent.contact['contact-h4']);
+
+updateElementStyles(contactParagraphs[0], { 'white-space': 'pre' });
 updateElementsProps(contactParagraphs, [
-  { textContent: siteContent.contact.address },
+  { textContent: siteContent.contact.address.split('Street').join('Street\n') },
   { textContent: siteContent.contact.phone },
   { textContent: siteContent.contact.email },
 ]);
