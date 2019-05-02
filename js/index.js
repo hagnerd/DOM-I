@@ -154,3 +154,48 @@ let allNavLinks = selectAll('nav a');
 updateElementsStyles(allNavLinks, {
   color: 'green'
 })
+
+/* Stretch Button */
+const dynamicContent = {
+  "state-1": {
+    "textContent": "Hello, World",
+    "style": {
+      "color": "lightgreen",
+      "fontSize": "2rem",
+    }
+  },
+  "state-2": {
+    "textContent": "I am a secret",
+    "style": {
+      "color": "lightpink",
+      "fontSize": ".8rem",
+    }
+  }
+}
+
+const footer = document.querySelector('footer');
+const dynamicButton = document.createElement("button");
+dynamicButton.textContent = "Do not push me!";
+updateElementStyles(dynamicButton, {
+  "cursor": "pointer",
+  "margin": "40px 0",
+})
+
+const dynamicP = document.createElement("p");
+updateTextContent(dynamicP, dynamicContent["state-1"].textContent);
+updateElementStyles(dynamicP, dynamicContent["state-1"].style);
+let showHidden = false;
+
+dynamicButton.addEventListener('click', () => {
+  showHidden = !showHidden; 
+
+  let currentState = showHidden ? "state-2" : "state-1";
+
+  updateTextContent(dynamicP, dynamicContent[currentState].textContent);
+  updateElementStyles(dynamicP, dynamicContent[currentState].style);
+
+});
+
+
+footer.appendChild(dynamicButton);
+footer.appendChild(dynamicP)
