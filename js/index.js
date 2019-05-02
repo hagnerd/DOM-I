@@ -85,6 +85,17 @@ const updateElementStyles = (element, styles) => {
 
 const updateElementsStyles = (elements, styles) => elements.forEach(el => updateElementStyles(el, styles))
 
+const createElementWithProps = (tagName, props) => {
+  const newTag = document.createElement(tagName);
+  const propsArr = Object.entries(props); 
+
+  propsArr.forEach(([key, value]) => {
+    newTag[key] = value;
+  })
+
+  return newTag;
+}
+
 /* Selectors */
 let nav = selectOne('nav');
 let navLinks = selectAll('nav a');
@@ -102,6 +113,12 @@ let copyrightParagraph = selectOne('footer p');
 updateElementsProps(navLinks, { 
   textContent: (i) => siteContent.nav[`nav-item-${i+1}`],
 });
+
+const firstNavItem = createElementWithProps('a', { href: "#", textContent: "First" }); 
+nav.prepend(firstNavItem);
+
+const lastNavItem = createElementWithProps('a', { href: "#", textContent: "Last" });
+nav.appendChild(lastNavItem);
 
 updateElementStyles(ctaTitle, { 'white-space': 'pre' });
 updateTextContent(ctaTitle, siteContent.cta.h1.replace(/\s/g, '\n'));
@@ -129,8 +146,9 @@ updateElementsProps(contactParagraphs, [
   { textContent: siteContent.contact.email },
 ]);
 updateTextContent(copyrightParagraph, siteContent.footer.copyright);
-/* Styles */
 
-updateElementsStyles(navLinks, {
+/* Styles */
+let allNavLinks = selectAll('nav a');
+updateElementsStyles(allNavLinks, {
   color: 'green'
 })
