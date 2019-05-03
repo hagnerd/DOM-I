@@ -40,3 +40,162 @@ const siteContent = {
 // Example: Update the img src for the logo
 let logo = document.getElementById("logo-img");
 logo.setAttribute('src', siteContent["nav"]["img-src"])
+
+/* Helper Functions */
+let selectAll = query => Array.from(document.querySelectorAll(query));
+let selectOne = query => document.querySelector(query);
+
+const updateProps = (element, props, meta) => {
+  let attrs = Object.entries(props);
+
+  attrs.forEach((attr) => {
+    let [prop, value] = attr;
+
+    if (typeof value === 'function') {
+      value = value(meta);
+    }
+
+    element[prop] = value;
+  });
+
+}
+
+const updateElementsProps = (elements, props) => 
+Array.isArray(props) 
+    ? elements.forEach((el, i) => {
+      updateProps(el, props[i], i)
+    })
+    : elements.forEach((el, i) => {
+      updateProps(el, props, i)
+    })
+
+const updateTextContent = (element, newValue) => 
+  updateProps(element, {'textContent': newValue});
+
+const updateSrc = (element, newValue) =>
+  updateProps(element, {'src': newValue});
+
+const updateElementStyles = (element, styles) => {
+  let stylesArr = Object.entries(styles);
+
+  stylesArr.forEach(([key, value]) => {
+    element.style[key] = value;
+  })
+}
+
+const updateElementsStyles = (elements, styles) => elements.forEach(el => updateElementStyles(el, styles))
+
+const createElementWithProps = (tagName, props) => {
+  const newTag = document.createElement(tagName);
+  const propsArr = Object.entries(props); 
+
+  propsArr.forEach(([key, value]) => {
+    newTag[key] = value;
+  })
+
+  return newTag;
+}
+
+/* Selectors */
+let nav = selectOne('nav');
+let navLinks = selectAll('nav a');
+let ctaTitle = selectOne('.cta-text h1');
+let ctaButton = selectOne('.cta-text button');
+let ctaImg = selectOne('#cta-img');
+let textContentHeaders = selectAll('.text-content h4');
+let textContentParagraphs = selectAll('.text-content p');
+let middleImg = selectOne('#middle-img');
+let contactHeader = selectOne('.contact h4');
+let contactParagraphs = selectAll('.contact p');
+let copyrightParagraph = selectOne('footer p');
+
+/* Content */
+updateElementsProps(navLinks, { 
+  textContent: (i) => siteContent.nav[`nav-item-${i+1}`],
+});
+
+const firstNavItem = createElementWithProps('a', { href: "#", textContent: "First" }); 
+nav.prepend(firstNavItem);
+
+const lastNavItem = createElementWithProps('a', { href: "#", textContent: "Last" });
+nav.appendChild(lastNavItem);
+
+updateElementStyles(ctaTitle, { 'white-space': 'pre' });
+updateTextContent(ctaTitle, siteContent.cta.h1.replace(/\s/g, '\n'));
+updateTextContent(ctaButton, siteContent.cta.button);
+updateSrc(ctaImg, siteContent.cta['img-src']);
+updateElementsProps(textContentHeaders, [
+  { textContent: siteContent['main-content']['features-h4'] },
+  { textContent: siteContent['main-content']['about-h4'] },
+  { textContent: siteContent['main-content']['services-h4'] },
+  { textContent: siteContent['main-content']['product-h4'] },
+  { textContent: siteContent['main-content']['vision-h4'] },
+]);
+updateElementsProps(textContentParagraphs, [
+  { textContent: siteContent['main-content']['features-content'] },
+  { textContent: siteContent['main-content']['about-content'] },
+  { textContent: siteContent['main-content']['services-content'] },
+  { textContent: siteContent['main-content']['product-content'] },
+  { textContent: siteContent['main-content']['vision-content'] },
+]);
+updateSrc(middleImg, siteContent['main-content']['middle-img-src']);
+updateTextContent(contactHeader, siteContent.contact['contact-h4']);
+
+updateElementStyles(contactParagraphs[0], { 'white-space': 'pre' });
+updateElementsProps(contactParagraphs, [
+  { textContent: siteContent.contact.address.split('Street').join('Street\n') },
+  { textContent: siteContent.contact.phone },
+  { textContent: siteContent.contact.email },
+]);
+updateTextContent(copyrightParagraph, siteContent.footer.copyright);
+
+/* Styles */
+let allNavLinks = selectAll('nav a');
+updateElementsStyles(allNavLinks, {
+  color: 'green'
+})
+
+/* Stretch Button */
+const dynamicContent = {
+  "state-1": {
+    "textContent": "Hello, World",
+    "style": {
+      "color": "lightgreen",
+      "fontSize": "2rem",
+    }
+  },
+  "state-2": {
+    "textContent": "I am a secret",
+    "style": {
+      "color": "lightpink",
+      "fontSize": ".8rem",
+    }
+  }
+}
+
+const footer = document.querySelector('footer');
+const dynamicButton = document.createElement("button");
+dynamicButton.textContent = "Do not push me!";
+updateElementStyles(dynamicButton, {
+  "cursor": "pointer",
+  "margin": "40px 0",
+})
+
+const dynamicP = document.createElement("p");
+updateTextContent(dynamicP, dynamicContent["state-1"].textContent);
+updateElementStyles(dynamicP, dynamicContent["state-1"].style);
+let showHidden = false;
+
+dynamicButton.addEventListener('click', () => {
+  showHidden = !showHidden; 
+
+  let currentState = showHidden ? "state-2" : "state-1";
+
+  updateTextContent(dynamicP, dynamicContent[currentState].textContent);
+  updateElementStyles(dynamicP, dynamicContent[currentState].style);
+
+});
+
+
+footer.appendChild(dynamicButton);
+footer.appendChild(dynamicP)
